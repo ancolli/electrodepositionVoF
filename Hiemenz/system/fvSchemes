@@ -1,0 +1,63 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         Euler;//CrankNicolson 0.5;//
+}
+
+gradSchemes
+{
+    default         leastSquares;//Gauss linear;//pointCellsLeastSquares;//
+}
+
+divSchemes
+{
+    div(rhoPhi,U)   Gauss linear;//Gauss limitedLinearV 1;//Gauss linear;//Gauss upwind;//limitedLinearV 1;//
+    //div((interpolate(alpha.air)*phi),C)	Gauss linearUpwind grad(C);//
+    //div(rhoPhi,C)   Gauss linearUpwind grad(C);//Gauss upwind;//Gauss linear;//
+    div(phi,C)      Gauss linear;//Gauss linearUpwind grad(C);//Gauss linear;//Gauss upwind;//
+    div(phi,alpha)  Gauss interfaceCompression;//Gauss linear;//Gauss vanLeer;//Gauss interfaceCompression;//Gauss interfaceCompression;//bounded Gauss vanLeer;Gauss linear;//
+    div(phirb,alpha) Gauss interfaceCompression;//Gauss linear;//
+    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear orthogonal;//Gauss linear corrected;//
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+fluxRequired
+{
+    default         no;
+    /*p_rgh;
+    pcorr;
+    alpha.water;*/
+}
+
+
+// ************************************************************************* //
