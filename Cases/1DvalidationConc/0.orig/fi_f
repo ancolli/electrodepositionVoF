@@ -1,0 +1,42 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  6                                     |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      fi_f;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+//#include "include/controlProperties"
+
+dimensions      [1 2 -3 0 0 -1 0];// V = kg*m^2/(A*s^3)
+
+internalField   uniform	0.025;//0.1;//0.05;
+
+boundaryField
+{
+    "(wall_cathode)"       
+    {
+        type            zeroGradient;
+    }
+        
+    wall_anode       
+    {
+    	//type		fixedGradient;
+    	//gradient	uniform 0.5; //j/kappa  */
+    	
+    	type	fixedValue;//fixedGradient;
+    	value	uniform 0.025;//0.1;//0.05;//gradient	uniform 7.7519; //j/kappa  */
+    }
+
+    #include "include/constantPatches"
+   
+}
+
+// ************************************************************************* //

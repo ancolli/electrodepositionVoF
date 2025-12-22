@@ -1,0 +1,95 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     electroDepositFlow;
+
+startFrom       latestTime;//startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         1.9e8;//1.45e8;//1.555e8;
+
+deltaT          1e-10;//0.1;//1e-10;
+
+writeControl    adjustable;
+
+writeInterval   #eval "$endTime/10";//5e6;
+
+purgeWrite      0;
+
+writeFormat     ascii;//binary;//
+
+writePrecision  12;
+
+writeCompression off;
+
+timeFormat      general; //
+
+timePrecision   12;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;//no;//
+
+maxCo           0.5;
+
+maxAlphaCo      0.5;
+
+maxDeltaT       10000;//0.001;
+
+maxCapillaryNum 100000;
+
+functions
+{
+    //#includeFunc "sampleU"
+    
+    probes
+    {
+        // Where to load it from
+        libs            (sampling);
+
+        type            probes;
+
+        // Name of the directory for probe data
+        name            probes;
+
+        // Write at same frequency as fields
+        writeControl    writeTime;
+        writeInterval   1;
+
+        // Fields to be probed
+        fields
+        (
+            C//fi_f
+        );
+
+        probeLocations
+        (
+            ( 0 0 0 )        // at inlet
+            //(0.21 -0.20999 0.01)  // at outlet1
+            //(0.21 0.20999 0.01)   // at outlet2
+            //(0.21 0 0.01)         // at central block
+        );
+    }
+
+}
+
+
+// ************************************************************************* //
